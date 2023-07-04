@@ -42,6 +42,7 @@ export default class VueRouter {
   init(){
     this.createRouteMap()
     this.initComponents(_Vue)
+    this.initEvent()
   }
 
   // 作用：把构造函数中传过来的routes(路由规则)转换成键值对的形式存储到routeMap
@@ -91,6 +92,12 @@ export default class VueRouter {
         const component = self.routeMap[self.data.current]
         return h(component)
       }
+    })
+  }
+
+  initEvent () {
+    window.addEventListener('popstate', () => {
+      this.data.current = window.location.pathname
     })
   }
 }
