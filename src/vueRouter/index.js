@@ -54,7 +54,7 @@ export default class VueRouter {
 
 
   initComponents (Vue) {
-    // 实现router-link标签，router-link 最终被渲染成 a 标签
+    // 实现router-link组件，router-link 最终被渲染成 a 标签
     Vue.component('router-link',{
       props:{
         to:String
@@ -67,11 +67,30 @@ export default class VueRouter {
         return h('a',{
           attrs:{
             href: this.to
+          },
+          // 给a标签对应的dom对象注册时间
+          on:{
+            click: this.clickHandler
           }
         },[this.$slots.default]) 
-      }
+      },
+      methods: {
+        clickHandler (e) {
+          history.pushState({},'',this.to)
+          this.$router.data.current = this.to
+          // 阻止默认行为
+          e.preventDefault();
+        }
+      },
     })
 
-
+    // 实现router-view组件，
+    const self = this // vue-router的实例
+    Vue.component('router-view',{
+      render(h){
+        const component = self.routeMap[self.data.current]
+        return h(component)
+      }
+    })
   }
 }
