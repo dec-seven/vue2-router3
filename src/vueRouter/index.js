@@ -26,4 +26,15 @@ export default class VueRouter {
     }) 
   }
 
+  // 实现构造函数constructor
+  constructor(options){
+    this.options = options
+    // 存储options中传入的routes；键 - 路由地址，值 - 路由组件
+    this.routeMap = {}
+    // data应该是响应式的对象 - 使用vue的observable
+    this.data = _Vue.observable({
+      current: '/'
+    })
+  }
+
 }
