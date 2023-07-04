@@ -37,4 +37,11 @@ export default class VueRouter {
     })
   }
 
+  // 作用：把构造函数中传过来的routes(路由规则)转换成键值对的形式存储到routeMap
+  createRouteMap(){
+    // 遍历所有的路由规则（routes),把路由规则解析成键值对的形式，存储到routeMap中
+    this.options.routes.forEach(route => {
+      this.routeMap[route.path] = route.component
+    })
+  }
 }
